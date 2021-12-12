@@ -42,7 +42,7 @@ public class MainActivity extends Activity {
             String type;
             if (itemPath.toLowerCase().startsWith("http:")
                     || itemPath.toLowerCase().startsWith("https:")) {
-                contentUri = Uri.parse(items.get(position).getPath());
+                contentUri = Uri.parse(itemPath);
                 type = "text/html";
             } else {
                 File file = new File(itemPath);
