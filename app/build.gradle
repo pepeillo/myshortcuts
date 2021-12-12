@@ -1,0 +1,66 @@
+apply plugin: 'com.android.application'
+
+android {
+    signingConfigs {
+        release{
+            storeFile file('keystore')
+            storePassword "keystore_password"
+            keyAlias "key_alias"
+            keyPassword "key_password"
+        }
+    }
+    compileSdkVersion 30
+    buildToolsVersion "30.0.3"
+
+    defaultConfig {
+        applicationId "es.jaf.myshortcuts"
+        minSdkVersion 24
+        targetSdkVersion 30
+        versionCode 1
+        versionName "1.0"
+
+        signingConfig signingConfigs.release
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+
+if (project.hasProperty("myproject.properties")) {
+    Properties props = new Properties()
+    def propFile = file(project.property("myproject.properties"))
+    if (propFile.canRead()) {
+        props.load(new FileInputStream(propFile))
+
+        if (props != null
+                && props.containsKey('keystore')
+                && props.containsKey('keystore_password')
+                && props.containsKey('key_alias')
+                && props.containsKey('key_password')) {
+
+            android.signingConfigs.release.storeFile = file(props['keystore'])
+            android.signingConfigs.release.storePassword = props['keystore_password']
+            android.signingConfigs.release.keyAlias = props['key_alias']
+            android.signingConfigs.release.keyPassword = props['key_password']
+        } else {
+            android.buildTypes.release.signingConfig = null
+        }
+    } else {
+        android.buildTypes.release.signingConfig = null
+    }
+}
+
+dependencies {
+    //implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation 'com.google.android.material:material:1.4.0'
+    //implementation 'com.github.angads25:filepicker:1.1.1'
+}

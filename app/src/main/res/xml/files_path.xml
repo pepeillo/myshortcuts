@@ -1,0 +1,8 @@
+<paths>
+    <files-path name="fp" path="/" />
+    <cache-path name="cp" path="/" />
+    <external-path name="ep" path="/" />
+    <external-files-path name="efp" path="/" />
+    <external-cache-path name="ecp" path="/" />
+    <external-media-path name="emp" path="/" />
+</paths>
